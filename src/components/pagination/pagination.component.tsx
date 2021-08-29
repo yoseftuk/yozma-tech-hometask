@@ -8,6 +8,7 @@ interface PaginationProps {
     lastPage: number;
 }
 const Pagination: FC<PaginationProps> = ({ page, setPage, lastPage }) => {
+    if (lastPage <= 1) return null;
     return (
         <PaginationWrapper>
             {page > 2 ? (
