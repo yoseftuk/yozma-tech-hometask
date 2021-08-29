@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+import { MainStyles } from './App.styles';
+import { Routes } from './enums/routes.enum';
+import Navbar from './layouts/navbar/navbar.component';
+
+const NotesList = lazy(
+    () => import('./pages/entries-list/entries-list.component')
+);
+const AddNote = lazy(() => import('./pages/add-entry/add-entry.component'));
+const ViewNote = lazy(() => import('./pages/view-entry/view-entry.component'));
+const NotFound = lazy(() => import('./pages/404/404.component'));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <MainStyles>
+            <Navbar />
+            <main>
+                <Suspense fallback={null}>
+                    <Switch>
+                        <Redirect exact from={'/'} to={Routes.LIST} />
+                        <Route exact path={Routes.LIST} component={NotesList} />
+                        <Route
+                            exact
+                            path={Routes.LIST + `/:id`}
+                            component={ViewNote}
+                        />
+                        <Route exact path={Routes.ADD} component={AddNote} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </Suspense>
+            </main>
+        </MainStyles>
+    );
 }
 
 export default App;
