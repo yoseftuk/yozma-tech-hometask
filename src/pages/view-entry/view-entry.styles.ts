@@ -23,6 +23,7 @@ export const ViewEntryWrapper = styled(WindowView)`
             &__large {
                 width: 100%;
                 display: block;
+                white-space: pre-line;
             }
             &__label {
                 margin-bottom: 12px;
@@ -42,7 +43,6 @@ export const ViewEntryWrapper = styled(WindowView)`
                 justify-content: space-between;
                 &__large {
                  display: block;
-                 white-space: pre-line;
                 }
             }
         }
